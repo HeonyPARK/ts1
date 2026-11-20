@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4f0">
+  <title>TS 공사관리 · 인테리어 공정관리</title>
+  <script>if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')document.documentElement.classList.add('online-mode','cloud-unlocked');</script>
+  <script>
+    window.firebaseConfig = {
+      apiKey: "AIzaSyC_QhOa3ZVRZoBFLb9SOnv58nC1kJQCVNk",
+      authDomain: "ts01-9afc3.firebaseapp.com",
+      projectId: "ts01-9afc3",
+      storageBucket: "ts01-9afc3.firebasestorage.app",
+      messagingSenderId: "676063609911",
+      appId: "1:676063609911:web:08a33686a231ef93ffabb2"
+    };
+  </script>
+  <script>
+    window.firebaseReady = (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+      ? import('./firebase-client.js')
+          .then(module => module.initializeFirebase(window.firebaseConfig))
+          .then(() => ({ ok: true }))
+          .catch(error => ({ error }))
+      : Promise.resolve({ ok: false });
+  </script>
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="interactions.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" data-action="home-dashboard" aria-label="TS 공사관리 홈">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18.5 10 12l3.4 3.2L20 8"/><path d="M15.5 8H20v4.5"/><path d="M4 5.5h5"/></svg></span>
+        <span><strong>TS 공사관리</strong><small>SPACE PROJECTS</small></span>
+      </a>
+      <div id="home-nav" class="home-nav"></div>
+      <div class="side-label">내 현장 <span id="site-count" class="count-pill">0</span></div>
+      <div id="site-list" class="site-list"></div>
+      <button class="add-site-button" data-action="new-site"><span>＋</span> 새 현장 등록</button>
+      <div class="sidebar-bottom">
+        <div class="local-note"><span class="local-dot"></span><span><strong id="cloud-state-title">이 기기에 저장 중</strong><small id="cloud-state-detail">변경 내용은 자동 저장됩니다</small></span></div>
+        <button class="text-button backup-button" data-action="backup">↓ 데이터 백업</button>
+        <button class="text-button backup-button" data-action="restore-backup">↑ JSON 백업 반영</button>
+        <input id="restore-backup-file" type="file" accept=".json,application/json" hidden>
+        <div class="side-version">TS 공사관리 <span>1.0</span></div>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <div class="crumb"><span>현장 관리</span><span class="crumb-slash">/</span><strong id="top-site-name">현장</strong></div>
+        <div class="topbar-actions">
+          <span id="save-status" class="save-status"><i></i> 저장됨</span>
+          <button class="icon-button" title="데이터 백업" aria-label="데이터 백업" data-action="backup"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg></button>
+        </div>
+      </header>
+      <main id="main-content" class="main-content"></main>
+      <footer class="app-footer"><span>TS 공사관리 <span id="footer-year"></span></span><span id="storage-footer-note">현장별 자료는 현재 사용 중인 브라우저에 저장됩니다.</span></footer>
+    </div>
+  </div>
+
+  <div id="cloud-gate" class="cloud-gate" hidden>
+    <section class="cloud-gate-card">
+      <div class="cloud-gate-brand"><span class="brand-mark">↗</span><span><strong>TS 공사관리</strong><small>온라인 공동 작업 공간</small></span></div>
+      <section id="cloud-bootstrap" class="cloud-bootstrap" hidden>
+        <h1>공유 자료 시작</h1>
+        <p>온라인 DB가 비어 있습니다. 기존 백업을 가져오거나 이 브라우저 자료로 시작하세요.</p>
+        <label class="button cloud-upload-button" for="cloud-backup-file">백업 JSON 가져오기</label>
+        <input id="cloud-backup-file" type="file" accept=".json,application/json" hidden>
+        <button id="cloud-use-local" class="button" type="button">이 브라우저 자료로 시작</button>
+        <button id="cloud-start-empty" class="button primary" type="button">빈 자료로 시작</button>
+        <p id="cloud-bootstrap-error" class="cloud-error" role="alert"></p>
+      </section>
+      <p id="cloud-gate-status" class="cloud-gate-status" aria-live="polite">온라인 연결을 확인하고 있습니다.</p>
+    </section>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+</body>
+</html>
